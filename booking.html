@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Tour</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/App.css">
+    <link rel="icon" type="image/png" href="./Logo/Zam-Travel.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar enhanced-navbar">
+        <div class="navbar-logo">
+            <div class="logo-title-motto">
+                <img src="./Logo/Zam-Travel.png" alt="Zambia Travel Logo" class="logo-img">
+                <span class="logo-title-motto-text">
+                    <span class="navbar-title">Zam-Travel</span>
+                    <span class="navbar-motto">Guiding You Through Zambia</span>
+                </span>
+            </div>
+        </div>
+        <ul class="navbar-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li class="nav-item dropdown enhanced-dropdown">
+                <a class="nav-link dropdown-toggle text-white enhanced-dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Options
+                </a>
+                <ul class="dropdown-menu enhanced-dropdown-menu">
+                    <li><a class="dropdown-item enhanced-dropdown-item" href="booking.html"><i class="fas fa-ticket-alt me-2 text-primary"></i>Booking</a></li>
+                    <li><a class="dropdown-item enhanced-dropdown-item" href="history.html"><i class="fas fa-clipboard-list me-2 text-success"></i>Management</a></li>
+                    <li><a class="dropdown-item enhanced-dropdown-item" href="transport.html"><i class="fas fa-bus me-2 text-info"></i>Transport</a></li>
+                    <li><a class="dropdown-item enhanced-dropdown-item" href="auth.html"><i class="fas fa-sign-out-alt me-2 text-exit"></i>Log Out</a></li>
+                    <li><a class="dropdown-item enhanced-dropdown-item" href="accommodations.html"><i class="fas fa-bed me-2 text-accommodations"></i>Accommodations</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                </ul>
+            </li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="section booking-section">
+            <div class="booking-container enhanced-card">
+                <h2 style="margin-bottom: 18px;">Book Your Tour</h2>
+                <form class="booking-form" id="bookingForm">
+                    <label for="email">Your Email</label>
+                    <input type="email" id="email" name="email" placeholder="email@example.com" required>
+
+                    <label for="tour">Choose Destination</label>
+                    <select id="tour" name="tour" required>
+                        <option value="">Select destination</option>
+                        <option value="Victoria Falls">Victoria Falls</option>
+                        <option value="South Luangwa">South Luangwa</option>
+                        <option value="Lake Kariba">Lake Kariba</option>
+                        <option value="Royal Livingstone Express">Royal Livingstone Express</option>
+                        <option value="Nachikufu Caves">Nachikufu Caves</option>
+                        <option value="Blue Lagoon National Park">Blue Lagoon National Park</option>
+                    </select>
+
+                    <label for="people">Number of People</label>
+                    <input type="number" id="people" name="people" min="1" value="1" required>
+
+                    <label for="amount">Amount (ZMW)</label>
+                    <select id="amount" name="amount" class="dropdown" required>
+                        <option value="">Select</option>
+                        <option value="465.69">465.69</option>
+                        <option value="679.45">679.45</option>
+                        <option value="749.90">749.90</option>
+                        <option value="800.00">800.00</option>
+                        <option value="530.42">530.42</option>
+                        <option value="500.00">500.00</option>
+                    </select>
+
+                    <label for="transportType" style="text-align: left;">Transport Type</label>
+                    <select id="transportType" name="transportType" required>
+                        <option value="">Select type</option>
+                        <option value="Bus">Bus - K300</option>
+                        <option value="Boat">Boat - K250</option>
+                        <option value="Plane">Plane - K400</option>
+                        <option value="Car Rental">Car Rental - K540</option>
+                    </select>
+
+                    <label for="from">From</label>
+                    <input type="text" id="from" name="from" placeholder="Departure location" required>
+
+                    <label for="to">To</label>
+                    <input type="text" id="to" name="to" placeholder="Destination" required>
+
+                    <label for="date">Date</label>
+                    <input type="date" id="date" name="date" required>
+
+                    <label for="payment">Payment Method</label>
+                    <select id="payment" name="payment" required>
+                        <option value="">Select payment method</option>
+                        <option value="Credit Card">Credit Card</option>
+                        <option value="Mobile Money">Mobile Money</option>
+                    </select>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary enhanced-btn">Submit</button>
+                        <button type="reset" class="btn-secondary enhanced-btn">Reset</button>
+                    </div>
+                    <div id="formMessage" class="form-message" aria-live="polite"></div>
+                </form>
+
+                <!-- Booking History Table -->
+                <h3 style="margin-top: 2rem;">Your Bookings</h3>
+                <div class="booking-history-container">
+                    <table class="booking-history-table">
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Tour</th>
+                                <th>Date</th>
+                                <th>People</th>
+                                <th>Transport</th>
+                                <th>Amount (ZMW)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingHistoryBody">
+                            <!-- Bookings will populate here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <div class="receipt-modal" id="receiptModal" tabindex="-1" aria-modal="true" role="dialog">
+            <div class="receipt-content" id="receiptContent"></div>
+            <div class="receipt-actions">
+                <button id="closeReceiptBtn" class="btn-secondary">Close</button>
+                <button id="printReceiptBtn" class="btn-primary">Print</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer enhanced-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+               <div class="logo-title-motto">
+                <img src="./Logo/Zam-Travel.png" alt="Zambia Travel Logo" class="logo-img">
+                <span class="logo-title-motto-text">
+                    <span class="navbar-title">Zam-Travel</span>
+                    <span class="navbar-motto">Guiding You Through Zambia</span>
+                </span>
+            </div>
+            <ul class="footer-links">
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="terms.html">Terms & Conditions</a></li>
+            </ul>
+            <p>&copy; 2024 Zambia Travel Agency. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+    // EmailJS init
+    if(typeof emailjs !== 'undefined' && emailjs.init){ emailjs.init('YOUR_USER_ID'); }
+
+    const bookingForm = document.getElementById('bookingForm');
+    const receiptModal = document.getElementById('receiptModal');
+    const receiptContent = document.getElementById('receiptContent');
+    const closeReceiptBtn = document.getElementById('closeReceiptBtn');
+    const printReceiptBtn = document.getElementById('printReceiptBtn');
+    const formMessage = document.getElementById('formMessage');
+
+    if(receiptModal) receiptModal.style.display = 'none';
+
+    function trapFocus(element) {
+        const focusableEls = element.querySelectorAll('button, [tabindex]:not([tabindex="-1"])');
+        if(!focusableEls.length) return;
+        const firstFocusableEl = focusableEls[0];
+        const lastFocusableEl = focusableEls[focusableEls.length-1];
+        element.addEventListener('keydown', function(e){
+            if(e.key==='Tab'){
+                if(e.shiftKey){
+                    if(document.activeElement===firstFocusableEl){ lastFocusableEl.focus(); e.preventDefault(); }
+                } else {
+                    if(document.activeElement===lastFocusableEl){ firstFocusableEl.focus(); e.preventDefault(); }
+                }
+            }
+            if(e.key==='Escape'){ closeReceipt(); }
+        });
+    }
+
+    function showReceiptModal(html){
+        receiptContent.innerHTML = html;
+        receiptModal.style.display='flex';
+        setTimeout(()=>{ receiptModal.focus(); trapFocus(receiptModal); }, 50);
+    }
+    function closeReceipt(){ receiptModal.style.display='none'; }
+
+    if(closeReceiptBtn) closeReceiptBtn.addEventListener('click', closeReceipt);
+    if(printReceiptBtn) printReceiptBtn.addEventListener('click', function(){
+        const content = receiptContent.innerHTML;
+        const printWindow = window.open('', '', 'width=600,height=600');
+        printWindow.document.write(content); printWindow.document.close(); printWindow.focus(); printWindow.print(); printWindow.close();
+    });
+
+    function saveBookingToHistory(booking){
+        const history = JSON.parse(localStorage.getItem('bookingHistory')||'[]');
+        history.push(booking);
+        localStorage.setItem('bookingHistory', JSON.stringify(history));
+    }
+
+    function saveBookingForAdmin(booking){
+        const bookings = JSON.parse(localStorage.getItem('bookings')||'[]');
+        bookings.push(booking);
+        localStorage.setItem('bookings', JSON.stringify(bookings));
+    }
+
+    function loadBookingHistory(){
+        const tbody = document.getElementById('bookingHistoryBody');
+        tbody.innerHTML='';
+        const history = JSON.parse(localStorage.getItem('bookingHistory')||'[]');
+        if(history.length===0){
+            const row = document.createElement('tr');
+            row.innerHTML='<td colspan="6" style="text-align:center;">No bookings yet.</td>';
+            tbody.appendChild(row);
+            return;
+        }
+        history.forEach(b=>{
+            const row = document.createElement('tr');
+            row.innerHTML=`
+                <td>${b.bookingId}</td>
+                <td>${b.tour}</td>
+                <td>${b.date}</td>
+                <td>${b.people}</td>
+                <td>${b.transportType}</td>
+                <td>${b.amount}</td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    loadBookingHistory();
+
+    bookingForm.onsubmit = function(e){
+        e.preventDefault();
+        formMessage.textContent='';
+        const form = this;
+        const email=form.email.value.trim();
+        const tour=form.tour.value;
+        const date=form.date.value;
+        const people=form.people.value;
+        const amount=form.amount.value;
+        const payment=form.payment.value;
+        const transportType=form.transportType.value;
+        const from=form.from.value.trim();
+        const to=form.to.value.trim();
+
+        if(!email||!tour||!date||!people||!amount||!payment||!transportType||!from||!to){
+            formMessage.textContent='Please fill in all fields.'; formMessage.style.color='red'; return;
+        }
+        const emailPattern=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(!emailPattern.test(email)){ formMessage.textContent='Please enter a valid email address.'; formMessage.style.color='red'; return; }
+        const today=new Date(); const selectedDate=new Date(date); today.setHours(0,0,0,0);
+        if(selectedDate<today){ formMessage.textContent='Please select a valid date (not in the past).'; formMessage.style.color='red'; return; }
+        if(isNaN(people)||Number(people)<1){ formMessage.textContent='Number of people must be at least 1.'; formMessage.style.color='red'; return; }
+
+        const bookingId='BK'+Date.now();
+        const booking={email,tour,date,people,amount,payment,transportType,from,to,bookingId};
+        saveBookingToHistory(booking);
+        saveBookingForAdmin(booking);
+
+        const receipt=`
+            <h3>Payment Receipt</h3>
+            <div><strong>Booking ID:</strong> ${bookingId}</div>
+            <div><strong>Tour:</strong> ${tour}</div>
+            <div><strong>Date:</strong> ${date}</div>
+            <div><strong>People:</strong> ${people}</div>
+            <div><strong>From:</strong> ${from}</div>
+            <div><strong>To:</strong> ${to}</div>
+            <div><strong>Transport:</strong> ${transportType}</div>
+            <div><strong>Amount:</strong> ZMW ${amount}</div>
+            <div><strong>Payment:</strong> ${payment}</div>
+        `;
+        showReceiptModal(receipt);
+
+        if(typeof emailjs!=='undefined'&&emailjs.send){
+            emailjs.send('YOUR_SERVICE_ID','YOUR_TEMPLATE_ID',{
+                to_email: email, tour, date, people, amount, payment, transportType, from, to, booking_id: bookingId
+            }).then(function(){ formMessage.textContent='Booking successful! A receipt has been sent to your email.'; formMessage.style.color='green'; },
+            function(){ formMessage.textContent='Booking saved, but failed to send email.'; formMessage.style.color='red'; });
+        } else { formMessage.textContent='Booking successful! (Email not sent: EmailJS not configured)'; formMessage.style.color='green'; }
+
+        form.reset();
+        setTimeout(loadBookingHistory,100);
+    };
+    </script>
+
+    <style>
+    /* --- Booking Form & Table Responsiveness --- */
+    .booking-section { display: flex; justify-content: center; align-items: center; min-height: 60vh; padding: 1rem; }
+    .booking-container { width: 100%; max-width: 400px; background: #fff; padding: 2rem; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 2.5px solid lightgray; transition: box-shadow 0.2s, border-color 0.2s; }
+    .booking-container:hover { box-shadow: 0 6px 24px rgba(42,123,228,0.13); }
+    .booking-form { display: flex; flex-direction: column; gap: 1rem; }
+    .booking-form label { text-align: left; }
+    .booking-form input, .booking-form select { width: 100%; max-width: 100%; padding: 0.5rem; border-radius: 4px; border: 1px solid #ccc; }
+    .form-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary { background: #007bff; color: #fff; border: none; padding: 0.5rem 1.5rem; border-radius: 4px; cursor: pointer; }
+    .btn-secondary { background: #6c757d; color: #fff; border: none; padding: 0.5rem 1.5rem; border-radius: 4px; cursor: pointer; }
+    .form-message { margin-top: 1rem; text-align: center; min-height: 1.5em; }
+
+    /* --- Receipt Modal --- */
+    .receipt-modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.4); align-items: center; justify-content: center; z-index: 1000; flex-direction: column; }
+    .receipt-content { background: #fff; padding: 2rem; border-radius: 8px; min-width: 300px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); margin-bottom: 1rem; }
+    .receipt-actions { display: flex; gap: 1rem; justify-content: center; }
+
+    /* --- Booking History Table --- */
+    .booking-history-container { overflow-x: auto; margin-top: 16px; }
+    .booking-history-table { width: 100%; border-collapse: collapse; min-width: 600px; }
+    .booking-history-table th, .booking-history-table td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
+    .booking-history-table th { background-color: #f2f2f2; }
+    @media(max-width: 768px){
+        .booking-container { max-width: 95%; padding: 1rem; }
+        .booking-history-table { font-size: 0.85rem; }
+        .form-actions { flex-direction: column; }
+    }
+    </style>
+</body>
+</html>
